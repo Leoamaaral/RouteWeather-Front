@@ -2,7 +2,7 @@
 
 **Repository:** [github.com/Leoamaaral/web](https://github.com/Leoamaaral/web)  
 
-Next.js UI for **RouteWeather**. The browser talks to the **Laravel API** ([github.com/Leoamaaral/api](https://github.com/Leoamaaral/api)). In this monorepo the API lives under [`../api`](../api); see [`../api/README.md`](../api/README.md) for setup, env vars, and full API docs.
+Next.js UI for **RouteWeather**. The browser talks to the **Laravel API** ([github.com/Leoamaaral/api](https://github.com/Leoamaaral/api)). In this monorepo the API lives under [`../api`](https://github.com/Leoamaaral/api); see [`../api/README.md`](https://github.com/Leoamaaral/api/blob/master/README.md) for setup, env vars, and full API docs.
 
 ## How the web app calls the API
 
@@ -15,7 +15,7 @@ The frontend does **not** set the path `/api` alone in env. You configure the **
 
 Implementation: [`src/lib/api.ts`](src/lib/api.ts) — `POST` with JSON body (`origin`, `destination`, optional `departure_at`, `sample_interval_km`, `use_traffic`).
 
-Default if env is missing: `http://localhost:8000` (same as [`api/.env.example`](../api/.env.example) `APP_URL`).
+Default if env is missing: `http://localhost:8000` (same as [`api/.env.example`](https://github.com/Leoamaaral/api/blob/master/.env.example) `APP_URL`).
 
 ## Requirements
 
