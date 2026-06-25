@@ -1,52 +1,205 @@
 @import "tailwindcss";
 
+/* Dark mode is the default and only theme — drive it from the `.dark` class on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette */
+  --rw-black: #0a0a0a;
+  --rw-surface: #1a1a1a;
+  --rw-white: #ffffff;
+  --rw-accent: #3b82f6;
+  --rw-accent-strong: #2563eb;
+
+  --background: var(--rw-black);
+  --foreground: var(--rw-white);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--rw-accent);
+  --color-surface: var(--rw-surface);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.5s ease forwards;
+  --animate-rise: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-rise-slow: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-shimmer: shimmer 1.8s linear infinite;
+  --animate-pulse-glow: pulse-glow 2.6s ease-in-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(59 130 246 / 0.35);
+  }
+  50% {
+    box-shadow: 0 0 22px 2px rgb(59 130 246 / 0.18);
+  }
+}
+
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--rw-black);
+  color: var(--rw-white);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Subtle tech ambience: layered radial glows over deep black. */
+  background-image:
+    radial-gradient(60rem 60rem at 12% -10%, rgb(59 130 246 / 0.14), transparent 60%),
+    radial-gradient(48rem 48rem at 100% 0%, rgb(37 99 235 / 0.1), transparent 55%),
+    radial-gradient(40rem 40rem at 50% 120%, rgb(59 130 246 / 0.08), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Google Places suggestions above modals / sticky UI */
+/* ---- Reusable surface utilities -------------------------------------- */
+
+/* Frosted glass panel */
+.glass {
+  background: linear-gradient(
+    160deg,
+    rgb(255 255 255 / 0.06) 0%,
+    rgb(255 255 255 / 0.02) 100%
+  );
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 0.06) inset,
+    0 24px 48px -24px rgb(0 0 0 / 0.8);
+}
+
+/* Slightly more solid, elevated card */
+.glass-solid {
+  background: linear-gradient(
+    160deg,
+    rgb(26 26 26 / 0.92) 0%,
+    rgb(10 10 10 / 0.92) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  box-shadow: 0 24px 48px -28px rgb(0 0 0 / 0.85);
+}
+
+/* Hairline gradient ring used on focusable accent elements */
+.accent-ring {
+  position: relative;
+}
+
+/* Animated loading shimmer block */
+.shimmer {
+  background: linear-gradient(
+    100deg,
+    rgb(255 255 255 / 0.04) 30%,
+    rgb(255 255 255 / 0.1) 50%,
+    rgb(255 255 255 / 0.04) 70%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* ---- Scrollbar ------------------------------------------------------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.16) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(255 255 255 / 0.14);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(59 130 246 / 0.5);
+  background-clip: padding-box;
+}
+
+/* ---- Google Places autocomplete dropdown (dark) ---------------------- */
 .pac-container {
   z-index: 10050 !important;
-  margin-top: 4px;
-  border-radius: 0.5rem;
-  border: 1px solid rgb(0 0 0 / 0.08);
+  margin-top: 6px;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: #141414;
   box-shadow:
-    0 10px 15px -3px rgb(0 0 0 / 0.08),
-    0 4px 6px -4px rgb(0 0 0 / 0.06);
+    0 20px 40px -16px rgb(0 0 0 / 0.85),
+    0 0 0 1px rgb(255 255 255 / 0.02);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow: hidden;
+  padding: 4px;
+}
+.pac-item {
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+  color: #d4d4d4;
+  padding: 8px 10px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.pac-item:first-child {
+  border-top: none;
+}
+.pac-item:hover,
+.pac-item-selected {
+  background: rgb(59 130 246 / 0.14);
+}
+.pac-item-query {
+  color: #fafafa;
+}
+.pac-matched {
+  color: var(--rw-accent);
+}
+.pac-icon {
+  filter: invert(1) opacity(0.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  .pac-container {
-    border-color: rgb(255 255 255 / 0.12);
-    background: #171717;
-  }
-  .pac-item {
-    border-top-color: rgb(255 255 255 / 0.08);
-    color: #e5e5e5;
-  }
-  .pac-item-query {
-    color: #fafafa;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

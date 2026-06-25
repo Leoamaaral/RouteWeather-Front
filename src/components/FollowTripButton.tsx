@@ -68,15 +68,26 @@ export function FollowTripButton({ origin, destination, destinationHint }: Props
         aria-expanded={open}
         aria-haspopup="menu"
         onClick={() => setOpen((v) => !v)}
-        className="rounded-xl border border-blue-600/25 bg-blue-600/10 px-4 py-2.5 text-sm font-semibold text-blue-700 shadow-sm transition hover:bg-blue-600/15 dark:border-blue-400/30 dark:bg-blue-500/15 dark:text-blue-200 dark:hover:bg-blue-500/25"
+        className="inline-flex items-center gap-2 rounded-xl border border-blue-400/30 bg-blue-500/15 px-4 py-2.5 text-sm font-semibold text-blue-200 shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-500/25 hover:shadow-lg hover:shadow-blue-500/20"
       >
         Seguir viagem
+        <svg
+          viewBox="0 0 24 24"
+          className={`size-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
       </button>
 
       {open && (
         <div
           role="menu"
-          className="absolute right-0 z-20 mt-2 min-w-[220px] rounded-xl border border-black/10 bg-white p-2 shadow-lg dark:border-white/12 dark:bg-neutral-900"
+          className="glass-solid absolute right-0 z-20 mt-2 min-w-[230px] rounded-xl p-2 animate-rise"
         >
           <a
             role="menuitem"
@@ -84,7 +95,7 @@ export function FollowTripButton({ origin, destination, destinationHint }: Props
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className={`${linkClass} text-blue-700 hover:bg-blue-50 dark:text-blue-200 dark:hover:bg-white/10`}
+            className={`${linkClass} text-blue-200 hover:bg-blue-500/15`}
           >
             Google Maps
           </a>
@@ -95,11 +106,11 @@ export function FollowTripButton({ origin, destination, destinationHint }: Props
             rel="noopener noreferrer"
             title="No Waze a partida é sempre a sua localização atual; o destino vem preenchido."
             onClick={() => setOpen(false)}
-            className={`${linkClass} text-sky-800 hover:bg-sky-50 dark:text-sky-200 dark:hover:bg-white/10`}
+            className={`${linkClass} text-sky-200 hover:bg-sky-500/15`}
           >
             Waze
           </a>
-          <p className="mt-1 border-t border-black/6 px-2 pt-2 text-[11px] leading-snug text-black/50 dark:border-white/10 dark:text-white/45">
+          <p className="mt-1 border-t border-white/10 px-2 pt-2 text-[11px] leading-snug text-white/45">
             Google Maps abre a rota origem → destino. No Waze, só o destino é fixo; a origem é a
             posição atual (limite do app).
           </p>

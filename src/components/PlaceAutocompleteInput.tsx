@@ -4,7 +4,7 @@ import { Autocomplete } from "@react-google-maps/api";
 import { useRef } from "react";
 
 const inputClassName =
-  "w-full rounded-lg border border-black/10 bg-white px-3 py-2.5 text-sm shadow-sm transition outline-none placeholder:text-black/40 focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/25 dark:border-white/15 dark:bg-black dark:placeholder:text-white/35 dark:focus:border-blue-400/50 dark:focus:ring-blue-400/20";
+  "w-full rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-white shadow-inner shadow-black/20 transition outline-none placeholder:text-white/35 focus:border-blue-400/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-blue-500/25";
 
 type Props = {
   id: string;
@@ -41,7 +41,7 @@ export function PlaceAutocompleteInput({
 
   return (
     <div className="grid gap-1.5">
-      <label className="text-sm font-medium text-black/80 dark:text-white/85" htmlFor={id}>
+      <label className="text-sm font-medium text-white/80" htmlFor={id}>
         {label}
       </label>
       {!mapsReady ? (

@@ -39,24 +39,25 @@ export function RouteSearchForm({ loading, onSubmit }: Props) {
   }
 
   const fieldClass =
-    "rounded-lg border border-black/10 bg-white px-3 py-2.5 text-sm shadow-sm transition outline-none focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/25 dark:border-white/15 dark:bg-black dark:focus:border-blue-400/50 dark:focus:ring-blue-400/20";
+    "rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-white shadow-inner shadow-black/20 transition outline-none focus:border-blue-400/60 focus:bg-white/[0.05] focus:ring-2 focus:ring-blue-500/25 [color-scheme:dark]";
 
   return (
-    <aside className="lg:sticky lg:top-8 lg:self-start">
+    <aside className="lg:sticky lg:top-24 lg:self-start">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-5 rounded-2xl border border-black/10 bg-white/80 p-6 shadow-md shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-black/45 dark:shadow-black/40"
+        className="glass flex flex-col gap-5 rounded-3xl p-6"
       >
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400">
+          <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-300">
+            <span className="size-1.5 rounded-full bg-blue-400 shadow-[0_0_8px] shadow-blue-400/70" />
             Planejamento
           </h2>
-          <p className="mt-1 text-sm text-black/55 dark:text-white/50">
+          <p className="mt-2 text-sm text-white/50">
             Origem e destino com sugestões do Google Places (Brasil).
           </p>
         </div>
 
-        <div className="h-px bg-black/8 dark:bg-white/10" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
 
         <div className="grid gap-4">
           <PlaceAutocompleteInput
@@ -78,15 +79,16 @@ export function RouteSearchForm({ loading, onSubmit }: Props) {
         </div>
 
         {!apiKey && (
-          <p className="rounded-lg border border-amber-500/35 bg-amber-500/10 px-3 py-2 text-xs text-amber-950 dark:text-amber-100">
-            Sem <code className="rounded bg-black/5 px-1 dark:bg-white/10">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code>
-            : autocomplete desativado; o mapa também não carrega.
+          <p className="rounded-xl border border-amber-500/35 bg-amber-500/10 px-3 py-2 text-xs leading-relaxed text-amber-100">
+            Sem{" "}
+            <code className="rounded bg-white/10 px-1">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code>:
+            autocomplete desativado; o mapa também não carrega.
           </p>
         )}
 
         <div className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
           <div className="grid min-w-0 gap-1.5">
-            <label className="text-sm font-medium text-black/80 dark:text-white/85" htmlFor="departure">
+            <label className="text-sm font-medium text-white/80" htmlFor="departure">
               Partida (opcional)
             </label>
             <input
@@ -99,7 +101,7 @@ export function RouteSearchForm({ loading, onSubmit }: Props) {
             />
           </div>
           <div className="grid min-w-0 gap-1.5">
-            <label className="text-sm font-medium text-black/80 dark:text-white/85" htmlFor="sample">
+            <label className="text-sm font-medium text-white/80" htmlFor="sample">
               Amostragem (km)
             </label>
             <input
@@ -115,15 +117,15 @@ export function RouteSearchForm({ loading, onSubmit }: Props) {
           </div>
         </div>
 
-        <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-black/6 bg-black/[0.02] px-3 py-3 text-sm dark:border-white/8 dark:bg-white/[0.03]">
+        <label className="group flex cursor-pointer items-start gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-3 py-3 text-sm transition hover:border-blue-400/30 hover:bg-blue-500/[0.06]">
           <input
             type="checkbox"
-            className="mt-0.5 size-4 rounded border-black/20 text-blue-600 focus:ring-blue-500 dark:border-white/30"
+            className="mt-0.5 size-4 rounded border-white/30 bg-transparent text-blue-500 accent-blue-500 focus:ring-blue-500"
             checked={useTraffic}
             onChange={(e) => setUseTraffic(e.target.checked)}
             disabled={loading}
           />
-          <span className="text-black/75 dark:text-white/70">
+          <span className="text-white/70 transition group-hover:text-white/90">
             Usar tráfego no Google (quando disponível)
           </span>
         </label>
@@ -131,9 +133,24 @@ export function RouteSearchForm({ loading, onSubmit }: Props) {
         <button
           type="submit"
           disabled={loading}
-          className="mt-1 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600"
+          className="group relative mt-1 overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-lg"
         >
-          {loading ? "Calculando rota…" : "Planejar rota e clima"}
+          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+          <span className="relative flex items-center justify-center gap-2">
+            {loading ? (
+              <>
+                <span className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                Calculando rota…
+              </>
+            ) : (
+              <>
+                Planejar rota e clima
+                <svg viewBox="0 0 24 24" className="size-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </>
+            )}
+          </span>
         </button>
       </form>
     </aside>
