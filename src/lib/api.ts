@@ -1,6 +1,7 @@
 import type { CompareResponse, RoutePlanResponse } from "./types";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const apiBase = `${baseUrl}/v1`;
 
 async function readError(response: Response): Promise<string> {
   const text = await response.text();
@@ -33,7 +34,7 @@ export type PlanPayload = {
 export async function planRouteWeather(
   payload: PlanPayload,
 ): Promise<RoutePlanResponse> {
-  const response = await fetch(`${baseUrl}/api/v1/route-weather/plan`, {
+  const response = await fetch(`${apiBase}/route-weather/plan`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify(payload),
@@ -53,7 +54,7 @@ export async function compareRouteWeather(payload: {
   sample_interval_km?: number;
   use_traffic?: boolean;
 }): Promise<CompareResponse> {
-  const response = await fetch(`${baseUrl}/api/v1/route-weather/plan/compare`, {
+  const response = await fetch(`${apiBase}/route-weather/plan/compare`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify(payload),
