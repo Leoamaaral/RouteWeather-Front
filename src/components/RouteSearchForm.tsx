@@ -67,6 +67,7 @@ export function RouteSearchForm({ loading, onSubmit }: Props) {
             onChange={setOrigin}
             disabled={loading}
             mapsReady={mapsReady}
+            showCurrentLocationButton
           />
           <PlaceAutocompleteInput
             id="destination"
