@@ -11,7 +11,7 @@ The frontend does **not** set the path `/api` alone in env. You configure the **
 | Piece | Value |
 |--------|--------|
 | Env var | `NEXT_PUBLIC_API_URL` (e.g. `http://127.0.0.1:8000`) |
-| Request URL | `{NEXT_PUBLIC_API_URL}/api/v1/route-weather/plan` |
+| Request URL | `{NEXT_PUBLIC_API_URL}/v1/route-weather/plan` |
 
 Implementation: [`src/lib/api.ts`](src/lib/api.ts) — `POST` with JSON body (`origin`, `destination`, optional `departure_at`, `sample_interval_km`, `use_traffic`).
 
@@ -32,7 +32,7 @@ Copy [`.env.example`](.env.example) to `.env.local` (or `.env`):
 | `NEXT_PUBLIC_API_URL` | Laravel base URL the browser will call (must match where `php artisan serve` or your proxy listens) |
 | `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` | Browser-side Google Maps JS (map, autocomplete). **Separate** from the API’s server key `GOOGLE_MAPS_API_KEY` used for Directions on the backend |
 
-If `NEXT_PUBLIC_API_URL` points to the wrong host/port, requests to `/api/v1/route-weather/plan` will fail (network error or CORS).
+If `NEXT_PUBLIC_API_URL` points to the wrong host/port, requests to `/v1/route-weather/plan` will fail (network error or CORS).
 
 ## Local development
 
